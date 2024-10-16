@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Lemon Reservations</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Welcome to Little Lemon Reservations</h1>
+
+        <!-- Link to view all reservations -->
+        <p><a class="btn btn-primary" href="{% url 'reservation_list' %}">View All Reservations</a></p>
+
+        <!-- Recent Reservations -->
+        <h2 class="mt-4">Recent Reservations</h2>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Reservation Date</th>
+                    <th>Number of Guests</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in recent_reservations %}
+                <tr>
+                    <td>{{ reservation.customer.username }}</td>
+                    <td>{{ reservation.date }}</td>
+                    <td>{{ reservation.number_of_guests }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center">No recent reservations</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Reservation Form -->
+        <h2 class="mt-4">Make a New Reservation</h2>
+        <form method="post" action="{% url 'create_reservation' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.11/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

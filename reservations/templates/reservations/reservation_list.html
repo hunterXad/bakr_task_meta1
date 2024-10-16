@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Your Reservations</h2>
+        <a class="btn btn-primary mb-3" href="{% url 'create_reservation' %}">Create New Reservation</a>
+        <ul class="list-group">
+            {% for reservation in reservations %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Table: {{ reservation.table_number }} | 
+                    Date: {{ reservation.date }} | 
+                    Time: {{ reservation.time }} | 
+                    Guests: {{ reservation.number_of_guests }}
+                    <div>
+                        <a class="btn btn-warning btn-sm" href="{% url 'update_reservation' reservation.pk %}">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="{% url 'delete_reservation' reservation.pk %}">Delete</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No reservations found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
